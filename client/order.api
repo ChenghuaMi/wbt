@@ -1,0 +1,50 @@
+type (
+    //创建订单
+    CreateOrderReq {
+        Type  byte     `form:"type,options=1|2"`
+        Price float64    `form:"price"`
+        Num   int64    `form:"num"`
+    }
+    CreateOrderReply {
+        OrderId int64   `json:"orderId"`
+    }
+
+    OrderListReq {
+        Type     byte    `form:"type,options=1|2"`
+        Page     int64   `form:"page,default=1"`
+
+    }
+    // 订单列表
+    OrderListReply {
+        OrderList []OrderList `json:"orderList"`
+        PageList PageList     `json:"pageList"`
+    }
+    OrderList {
+        Id int64        `json:"id"`
+        Type     byte   `json:"type"`
+        OrderNo  string `json:"orderNo"`
+        Price    float64 `json:"price"`
+        Num      int64   `json:"num"`
+        UserId   int64   `json:"userId"`
+        Status   byte    `json:"status"`
+        CreatedTime int64  `json:"createdTime"`
+        UpdatedTime int64   `json:"updatedTime"`
+    }
+    PageList {
+        Total  int64  `json:"total"`
+        Page   int64    `json:"page"`
+        PageSize int64   `json:"pageSize"`
+    }
+)
+@server(
+    group: order
+    middleware: CheckToken
+    jwt: Auth
+    prefix: api/v1/order
+)
+service client-api {
+    @handler CreateOrder
+    post /createOrder (CreateOrderReq) returns (CreateOrderReply)
+    @handler OrderList
+    get /orderList  (OrderListReq) returns (CommonReply)
+}

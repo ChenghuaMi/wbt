@@ -1,0 +1,8 @@
+@server(
+	group: sev
+	prefix: bak
+)
+service server-api {
+	@handler RunServer
+	post    /runServer
+}

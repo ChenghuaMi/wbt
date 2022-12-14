@@ -1,0 +1,17 @@
+import (
+	"user.api"
+	"order.api"
+)
+info(
+	auth: "ChenghuaMi"
+	date: "2022-11-07"
+	desc: "戳合匹配机制"
+)
+
+type (
+	CommonReply {
+		Code int64       `json:"code"`
+		Msg  string      `json:"msg"`
+		Data interface{} `json:"data"`
+	}
+)

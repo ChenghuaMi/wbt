@@ -1,0 +1,44 @@
+type (
+    LoginReq {
+        Username string `form:"username"`
+        Password string    `form:"password"`
+    }
+
+    LoginReply {
+        Id int64    `json:"id"`
+        Username string     `json:"username"`
+        TotalMoney float64 `json:"totalMoney"`
+        UseMoney  float64 `json:"useMoney"`
+        Money   float64 `json:"money"`
+        TotalScore float64 `json:"totalScore"`
+        UseScore  float64 `json:"useScore"`
+        Score   float64 `json:"score"`
+        AccessToken  string `json:"accessToken"`
+        AccessExpire  int64 `json:"accessExpire"`
+        RefreshAfter  int64    `json:"refreshAfter"`
+    }
+
+    RegisterReq {
+        Username string     `form:"username"`
+        Password string     `form:"password"`
+        Status   byte       `form:"status,optional"`
+        CreatedTime int64   `form:"createdTime,optional"`
+        UpdatedTime int64   `form:"updatedTime,optional"`
+    }
+    RegisterReply {
+        Code int64            `json:"code"`
+        Msg string          `json:"msg"`
+        Ok  bool            `json:"ok"`
+    }
+)
+
+@server(
+    group: user
+    prefix: api/v1/user
+)
+service client-api {
+    @handler Login
+    post /login (LoginReq) returns(CommonReply)
+    @handler Register
+    post /register (RegisterReq) returns(RegisterReply)
+}
